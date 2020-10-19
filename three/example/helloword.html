@@ -1,0 +1,65 @@
+<!--
+ * @Description: 
+ * @Version: 1.0
+ * @Autor: in hengqi by mengze 
+ * @Date: 2020-10-19 14:19:17
+ * @LastEditors: in hengqi by mengze
+ * @LastEditTime: 2020-10-19 19:46:22
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello world</title>
+    <script src="../three.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="WebGL-output"></div>
+    <script>
+        function init(){    
+
+            //1、生成场景
+            var scene = new THREE.Scene();
+            //2、生成相机
+            var camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 1, 1000 );
+            //3、生成渲染器
+            var renderer = new THREE.WebGLRenderer();
+
+            //清除并设置背景颜色
+            renderer.setClearColor(0xEEEEEE);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            var sphereGeometry = new THREE.SphereGeometry(6, 50, 50);
+            var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x7777ff, wireframe: true });
+            var sphere = new THREE.Mesh( sphereGeometry, sphereMaterial);
+            scene.add(sphere);
+
+            camera.position.x = 0;
+            camera.position.y = 0;
+            camera.position.z = 30;
+
+            document.getElementById("WebGL-output").appendChild( renderer.domElement );
+            renderer.render(scene, camera)
+
+            function animation (  ){
+                sphere.rotation.y += 0.01;
+                renderer.render(scene, camera);
+                requestAnimationFrame(animation);
+            }
+            animation()
+        }
+
+
+
+        window.onload = init;
+    </script>
+</body>
+</html>
